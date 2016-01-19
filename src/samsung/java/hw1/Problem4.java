@@ -1,5 +1,4 @@
 package samsung.java.hw1;
-/// Not done.
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +25,6 @@ public class Problem4 {
 	}
 	private static double f(double x){
 		return Math.sin(2*x) + x*x;
-//		System.out.println(" f(x) = " + (Math.sin(2*x) + x*x)); 
 	}
 	private static void df(double x){
 		double x1 = f(x + Math.pow(10, -6)); // Calculate f(x+ delta(x)) 
@@ -35,33 +33,26 @@ public class Problem4 {
 		System.out.println(" f'(x) = "+ (x1/y1 - x2/y1) ); 
 	}
 	private static void f( double a, double b){
-		double c = 0d;
-////		double x1 = 0;
+		/** *Java Doc
+		 * Using Bisection Method to find result for this equation
+		 */
+		double c = Integer.MAX_VALUE; // Set result  = + MaxINT
 		if (f(a)*f(b)>0) System.out.println(" This equation have zero or more results");
-		do {
-			c = (a+b)/2;
-			if (f(a)*f(c) < 0 ) b = c;  
-			else if (f(a)*f(c)>0) a =c ;
-//			else {
-//				System.out.println(c + " ");
-//				
-//			}
+		else if (f(a)*f(b)<0){
+			do {
+				c = (a+b)/2;
+				if (f(c) == 0d ) break;
+				if (f(a)*f(c) < 0 ) b = c;  
+				else if (f(a)*f(c)> 0) a =c ;
+			}
+			while ( (Math.abs(a-b))/2 > Math.pow(10, -9));
+			System.out.println("x = "+c);
 		}
-//		do{
-//			c = (a+b)/2.0;
-//			if (f(c)==0) {
-//				System.out.println(" x = "+ c);
-//				break;
-//			}
-//			else{
-//				if (f(a)*f(b)<0) b=c;
-//				else if (f(a)*f(b)<0) a=c;
-//			}
-//		}
-		while ( (Math.abs(a-b))/2 > Math.pow(10, -9));
-//		if (c != 0) System.out.println(" No result ");
-		System.out.println(c);
-
+		else if (f(a)*f(b) == 0)
+				if ( a != b )
+					System.out.println(a + " and " + b +" are results ");
+				else 
+					System.out.println("x = " + a +" is result ");
 	}
 	private static void makeChoose(String choose) {
 		switch(choose){
@@ -81,9 +72,7 @@ public class Problem4 {
 			print();
 			break;
 		case "3":
-//			System.out.println(" Enter x : ");
 			input = new Scanner(System.in);
-//			x = input.nextDouble();
 			System.out.println(" Enter a and b : ");
 			double a = input.nextDouble();
 			double b = input.nextDouble();
@@ -96,11 +85,5 @@ public class Problem4 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		print();
-		
-			
-		
-		
-		
 	}
-
 }
