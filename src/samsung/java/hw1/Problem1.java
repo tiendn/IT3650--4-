@@ -25,8 +25,6 @@ public class Problem1 {
 		double y = input.nextDouble();
 		System.out.println(" F(x) = " + f(x));
 		System.out.println(" G(x,y) = " + g(x,y));
-		
-		
 	}
 
 }

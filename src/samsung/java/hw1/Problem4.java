@@ -8,7 +8,8 @@ public class Problem4 {
 	private static Scanner input;
 	private static String choose;
 	private static double x;
-	private static void print() {
+	
+	private static void Menu() {
 		System.out.println("Function: f(x) = sin(2x) + x²");
 		System.out.println("1. Calculate f(x) at x");
 		System.out.println("2. Calculate f'(x) at x");
@@ -36,7 +37,7 @@ public class Problem4 {
 		/** *Java Doc
 		 * Using Bisection Method to find result for this equation
 		 */
-		double c = Integer.MAX_VALUE; // Set result  = + MaxINT
+		double c = Double.MAX_VALUE; // Set result  = + MaxDouble
 		if (f(a)*f(b)>0) System.out.println(" This equation have zero or more results");
 		else if (f(a)*f(b)<0){
 			do {
@@ -48,11 +49,13 @@ public class Problem4 {
 			while ( (Math.abs(a-b))/2 > Math.pow(10, -9));
 			System.out.println("x = "+c);
 		}
-		else if (f(a)*f(b) == 0)
-				if ( a != b )
-					System.out.println(a + " and " + b +" are results ");
-				else 
-					System.out.println("x = " + a +" is result ");
+		else if (f(a)*f(b) == 0){
+			if ( a != b )
+				System.out.println(a + " and " + b +" are results ");
+			else 
+				System.out.println("x = " + a +" is result ");
+		}
+				
 	}
 	private static void makeChoose(String choose) {
 		switch(choose){
@@ -62,14 +65,14 @@ public class Problem4 {
 			x = input.nextDouble();	
 			f(x);
 			System.out.println(" f(x) = " + f(x));
-			print();
+			Menu();
 			break;
 		case "2": 
 			System.out.println(" Enter x : ");
 			input = new Scanner(System.in);
 			x = input.nextDouble();
 			df(x);
-			print();
+			Menu();
 			break;
 		case "3":
 			input = new Scanner(System.in);
@@ -77,13 +80,13 @@ public class Problem4 {
 			double a = input.nextDouble();
 			double b = input.nextDouble();
 			f(a,b);
-			print();
+			Menu();
 			break;
 		default: break;	
 		}
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		print();
+		Menu();
 	}
 }
