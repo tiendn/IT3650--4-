@@ -45,50 +45,110 @@ public class SavingAccount {
 		if ( !id.equals("") && !name.equals("")){
 			setAccountID(id);
 			setAccountName(name);
-			setAssets(null);
+			setAssets(0.0);
 			setDateGive(null);
-			setIRate(null);
+			setIRate(0.0);
 		}
 		else System.out.println(" This account cannot create. ");
 	}
 	// *********************** Get,Set method. ******************************
+	/** Get Date give money
+	 * 
+	 * @return : Date give money
+	 */
 	public Date getDateGive() {
-		return dateGive;
+		return dateGive;		
 	}
+	/** Setter Date give 
+	 * 
+	 * @param dateGive
+	 */
 	public void setDateGive(Date dateGive) {
 		this.dateGive = dateGive;
 	}
+	/** Getter: Take interest rate
+	 * 
+	 * @return
+	 */
 	public Double getIRate() {
 		return iRate;
 	}
+	/**  Setter: set interest rate : Lãi suất 
+	 * 
+	 * @param iRate
+	 */
 	public void setIRate(Double iRate) {
 		this.iRate = iRate;
 	}
+	/** Getter : Take account id
+	 * 
+	 * @return
+	 */
 	public String getAccountID() {
 		return accountID;
 	}
+	/**  Setter: Set account id
+	 * 
+	 * @param accountID
+	 */
 	public void setAccountID(String accountID) {
 		this.accountID = accountID;
 	}
+	/** Getter : Take account name
+	 * 
+	 * @return
+	 */
 	public String getAccountName() {
 		return accountName;
 	}
+	/** Setter : Account name
+	 * 
+	 * @param accountName
+	 */
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
 	}
+	/** Getter root saving account
+	 * 
+	 * @return : root saving account
+	 */
 	public Double getAssets() {
 		return Assets;
 	}
+	/** Setter root saving account
+	 * 
+	 * @param assets
+	 */
 	public void setAssets(Double assets) {
 		Assets = assets;
 	}
-	// ********************** End Get,Set Method ****************************** 
+	// ********************** End Get,Set Method ******************************
+	
+	/** Check information : assets, rate  are exist on this account
+	 * 
+	 * @return 
+	 *  <p> True if this account have asset,rate. </p>
+	 *  <p> False if not .... </p>
+	 */
+	public boolean isExist(){
+		if ( getAssets() == 0 && getIRate() == 0  )
+			return false;
+		return true;
+	}
 	/** Calculate number of days from day given.
 	 * 
 	 */
 	public long getDays(){
-		Date date = new Date();		
-		return (date.getTime()-this.getDateGive().getTime())/(3600*24*1000);
+		if (getDateGive() == null){
+			return 0;
+		}
+		else {
+			Date date = new Date();
+			if (date.getTime()>getDateGive().getTime())
+				return (date.getTime()-getDateGive().getTime())/(3600*24*1000);
+			else return 0;
+		}
+		
 	}
 	/** Money a way from a total
  	 * 
@@ -108,20 +168,33 @@ public class SavingAccount {
 	 *  <p> DateGiven = Now </p>
 	 */
 	public void withdrawInterest(){
-		System.out.println(" Your money withdrew: " + getBalance());
-		setDateGive(new Date());
+		if (isExist()){
+			System.out.println(" Your money withdrew: " + getBalance());
+			setDateGive(new Date());
+		}
+		else System.out.println(" This account don't have money");
 	}
 	/** Withdraw partially, all balance and some part of assets
 	 * <p> DateGiven = Now </p>
 	 * @param money : this argument mean how much money user want to withdraw from root account (assets)
+	 * @return 
+	 *  0: if this account don't give money in bank<br>
+	 *  1: if this account give money in bank
 	 */
-	public void withdrawPartially(double money){
-		if ( money <= 0 || money > getAssets())
-			System.out.println(" This number is valid");
+	public int withdrawPartially(double money){
+		if (isExist()){
+			if ( money <= 0 || money > getAssets())
+				System.out.println(" This number is not valid");
+			else {
+				System.out.println(" Partially withdrew = " + (getBalance()+money));
+				setAssets(getAssets()-money);
+				setDateGive(new Date());
+			}
+			return 1;
+		}
 		else {
-			System.out.println(" Partially withdrew = " + (getBalance()+money));
-			setAssets(getAssets()-money);
-			setDateGive(new Date());
+			System.out.println(" This account don't have money");
+			return 0;
 		}
 	}
 	/**
@@ -129,23 +202,30 @@ public class SavingAccount {
 	 *  <p> DateGiven = Now </p>
 	 */
 	public void withdrawTotally(){
-		System.out.println(" Totally withdrew = " + getTotalAssets());
-		setAssets(0.0);
-		setDateGive(new Date());
+		if (isExist()){
+			System.out.println(" Totally withdrew = " + getTotalAssets());
+			setAssets(0.0);
+			setDateGive(new Date());
+		}
+		else System.out.println(" This account don't have money");	
+		
 	}
 	/**Give money in bank <br>
 	 * Show all balance <br>
 	 * DateGiven = Now <br>
 	 * @param money : how much money that user give money to the bank
 	 */
-	public void Deposit(double money){
-		System.out.println(" Your balance : " + getBalance());
-		if (money <= 0)
-			System.out.println(" This number is valid. ");
-		else {
-			setAssets(getTotalAssets()+money);
-			setDateGive(new Date());
+	public void Deposit(double money,double rate){
+		if (isExist()){
+			System.out.println(" Your balance : " + getBalance());
 		}
+		else {
+			System.out.println(" This account didn't have money before.");	
+		}
+		setAssets(getTotalAssets()+money);
+		setDateGive(new Date());
+		setIRate(rate);
+		System.out.println(" Deposit successful");	
 	}
 	
 }

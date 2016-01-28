@@ -1,21 +1,31 @@
 package samsung.java.week2.square;
-
+/**Set class Square : describe a square
+ * 
+ * @author monkey
+ *
+ */
 public class Square {
-	/** Set class Square : describe a square
-	 * @param att edge : the edge of square
-	 *  
-	 */
 	
 	private float edge;
+	/** The constructor with float argument
+	 * 
+	 * @param edge : set edge of this square
+	 */
 	public Square(float edge){
-		/**
-		 *  The constructor with float argument
-		 */
+		
 		setEdge(edge);
 	}
+	/** Getter method
+	 * 
+	 * @return : Edge of this square
+	 */
 	public float getEdge() {
 		return edge;
 	}
+	/** Setter method
+	 * 
+	 * @param edge 
+	 */
 	public void setEdge(float edge) {
 		if ( edge > 0 && Float.isFinite(edge))
 			this.edge = edge;
@@ -27,23 +37,23 @@ public class Square {
 		
 		System.out.println("Length of square edge is : "+ getEdge());
 	}
-	public void displayPerimeter(){
-		/**
-		 *  Display the perimeter of square
-		 */
+	/**
+	 *  Display the perimeter of square
+	 */
+	public void displayPerimeter(){	
 		System.out.println("The perimeter of square is : "+ getEdge()*4);
 	}
-	public void displayArea(){
-		/**
-		 * Display the area of square
-		 */
+	/**
+	 * Display the area of square
+	 */
+	public void displayArea(){	
 		System.out.println("The area of square is : " + Math.pow(getEdge(), 2));
 	}
-	public void displayAllInfo(){
-		/** 
-		 * Display the length of square edge, 
-		 * Display the perimeter,area of square
-		 */
+	/** 
+	 * Display the length of square edge, 
+	 * Display the perimeter,area of square
+	 */
+	public void displayAllInfo(){	
 		displayLength();
 		displayPerimeter();
 		displayArea();

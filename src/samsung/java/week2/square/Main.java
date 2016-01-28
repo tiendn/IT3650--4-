@@ -1,5 +1,9 @@
 package samsung.java.week2.square;
-
+/** Class run program
+ * 
+ * @author monkey
+ *
+ */
 public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
