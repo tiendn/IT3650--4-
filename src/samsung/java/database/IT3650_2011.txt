@@ -1,0 +1,4 @@
+SubjectID|IT3650
+Subject|23
+F|0.0|100.0
+Semester|2011

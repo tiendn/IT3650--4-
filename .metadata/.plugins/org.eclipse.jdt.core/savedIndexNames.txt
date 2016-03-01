@@ -1,0 +1,1 @@
+INDEX VERSION 1.127+C:\Users\monkey\Dropbox\Hust\Code eclipse\IT3650\.metadata\.plugins\org.eclipse.jdt.core

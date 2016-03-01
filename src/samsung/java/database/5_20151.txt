@@ -1,0 +1,5 @@
+SubjectID|5
+Subject|3
+F|4.0|96.0
+Semester|20151
+StudentCount|40
