@@ -1,0 +1,8 @@
+SubjectID|it
+Subject|tie
+F|85.0|15.0
+Semester|2
+StudentCount|3
+S|1|   | | 0.0 | 0.0 | F |
+S|4|   | | 0.0 | 0.0 | F |
+S|23|   | | 0.0 | 0.0 | F |

@@ -3,39 +3,66 @@ package samsung.java.sms;
 public class Subject {
 	private String subjectID;
 	private String subjectName;
-	private double pointProcessRate;
+	private double pointProgressRate;
 	private double finalPointRate;
 	/**
 	 * Subject constructor 
 	 * @param ID
 	 * @param name
-	 * @param pointProcessRate
+	 * @param pointProgressRate
 	 */
-	public Subject(String ID, String name, double pointProcessRate){
+	public Subject(String ID, String name, double pointProgressRate){
 		setSubjectID(ID);
 		setSubjectName(name);
-		setPointProcessRate(pointProcessRate);
+		setPointProgressRate(pointProgressRate);
 		setFinalPointRate();
 	}
+	/**
+	 * Get Subject ID
+	 * @return Subject ID
+	 */
 	protected String getSubjectID() {
 		return subjectID;
 	}
+	/**
+	 * Set Subject ID
+	 * @param subjectID
+	 */
 	protected void setSubjectID(String subjectID) {
 		this.subjectID = subjectID;
 	}
+	/**
+	 * 
+	 * @return Subject Name
+	 */
 	protected String getSubjectName() {
 		return subjectName;
 	}
+	/**
+	 * Set Subject name
+	 * @param subjectName
+	 */
 	protected void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
-	protected double getPointProcessRate() {
-		return pointProcessRate;
+	/**
+	 * 
+	 * @return point progress rate
+	 */
+	protected double getPointProgressRate() {
+		return pointProgressRate;
 	}
-	protected void setPointProcessRate(double pointProcessRate) {
-		if (pointProcessRate <= 50)
-			this.pointProcessRate = pointProcessRate;
+	/**
+	 * Set point progress rate
+	 * @param pointProgressRate
+	 */
+	protected void setPointProgressRate(double pointProgressRate) {
+		this.pointProgressRate = pointProgressRate;
 	}
+	/**
+	 * 
+	 * @return final point rate
+	 */
 	protected double getFinalPointRate() {
 		return finalPointRate;
 	}
@@ -43,7 +70,8 @@ public class Subject {
 	 * Set final point rate in 100 level.
 	 */
 	protected void setFinalPointRate() {
-		this.finalPointRate = 100 - getPointProcessRate();
+		
+		this.finalPointRate = 100.0 - getPointProgressRate();
 	}
 	
 }

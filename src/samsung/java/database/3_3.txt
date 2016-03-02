@@ -1,0 +1,6 @@
+SubjectID|3
+Subject|3
+F|3.0|97.0
+Semester|3
+StudentCount|3
+ S|2|   | | 0.0 | 0.0 | F
