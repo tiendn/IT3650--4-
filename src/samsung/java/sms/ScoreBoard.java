@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class ScoreBoard {
+public class ScoreBoard implements IScoreBoard{
 	private Subject subject;
 	private StudentScore[] studentScoreList = new StudentScore[100];
 	public int n = 0;
@@ -26,6 +26,9 @@ public class ScoreBoard {
 	private int scoreC = 0; // count the number of C score
 	private int scoreD = 0; // count the number of D score
 	private int scoreF = 0; // count the number of F score
+	public ScoreBoard(){
+		
+	}
 	/** Constructor create a new Score Board 
 	 * <br> if File Score exist, read information from this file
 	 * @param subject
@@ -42,10 +45,9 @@ public class ScoreBoard {
 			if (file.createNewFile()) {
 				System.out.println("File was created!");
 				setNumberStudent(numberStudent);
-//				writeFile();
 			} else {
 				 System.out.println("File already exists.");
-				 readFile();
+				 readFile(subject.getSubjectID(), semesterID);
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
@@ -102,6 +104,7 @@ public class ScoreBoard {
 	 * @param studentID
 	 * @return
 	 */
+	@Override
 	public int getIndexStudent(String studentID) {
 		for (int i = 1 ; i <= n; i++ )
 			if (studentScoreList[i].getStudentID().equals(studentID)) 
@@ -113,38 +116,46 @@ public class ScoreBoard {
 	 *  Enter String id
 	 * @return
 	 */
+	@Override
 	public String enterID(){
 		Scanner input = new Scanner(System.in);
 		String ID = input.nextLine();
+		ID = ID.trim();
+		ID = ID.toUpperCase();
 		return ID;
 	}
 	/**
 	 * Enter a number type of double
 	 * @return
 	 */
+	@Override
 	public double enterNumber(){
 		Scanner input = new Scanner(System.in);
 		double number = 0;
 		try {		
-			number = Integer.parseInt(input.nextLine());
+			number = Double.parseDouble(input.nextLine());
 		}
 		catch (NumberFormatException nfe){
 			System.out.println(nfe.getMessage());
+			System.out.println(" The value will be 0 if not enter again.");
 		}
 		return number;
 	}
 	/** Read File Score....
 	 * 
 	 */
-	private void readFile(){
+	@Override
+	public boolean readFile(String subjectID, String semesterID){
 		try(FileReader fr = new FileReader(path)){
 			BufferedReader br = new BufferedReader(fr);	
 			String line ="";
 			StringTokenizer readData;
 			// subject ID
 			line = br.readLine();
-			String subjectID = getSubject().getSubjectID();
-			
+			if (line == null ) {
+				return false; // if file error
+			}
+//			String subjectID = getSubject().getSubjectID();
 			// subject Name
 			line = br.readLine();
 			readData = new StringTokenizer(line,"|");
@@ -154,8 +165,8 @@ public class ScoreBoard {
 			line = br.readLine();
 			readData = new StringTokenizer(line,"|");
 			readData.nextToken();
-			Double pointProcessRate = Double.parseDouble(readData.nextToken());
-			Subject subject = new Subject(subjectID,subjectName,pointProcessRate);
+			Double pointProgressRate = Double.parseDouble(readData.nextToken());
+			Subject subject = new Subject(subjectID,subjectName,pointProgressRate);
 			setSubject(subject);
 			// semester
 			line = br.readLine();
@@ -183,10 +194,12 @@ public class ScoreBoard {
 		catch (IOException e){
 			System.out.println(e.getMessage());
 		}
+		return true;
 	}
 	/**
 	 *  Update File Score
 	 */
+	@Override
 	public void updateFile(){
 		setNumberStudent(n);
 		swapName();
@@ -196,14 +209,14 @@ public class ScoreBoard {
 			bw.newLine();
 			bw.write("Subject|"+getSubject().getSubjectName());
 			bw.newLine();
-			bw.write("F|"+getSubject().getPointProcessRate() + "|" + getSubject().getFinalPointRate());
+			bw.write("F|"+getSubject().getPointProgressRate() + "|" + getSubject().getFinalPointRate());
 			bw.newLine();
 			bw.write("Semester|"+ getSemesterID());
 			bw.newLine();
 			bw.write("StudentCount|"+ getNumberStudent());
 			bw.newLine();
 			for ( int i = 1 ; i <= n ; i++ ){
-				bw.write(studentScoreList[i].getMarkLine(getSubject().getPointProcessRate(),getSubject().getFinalPointRate()));
+				bw.write(studentScoreList[i].getMarkLine(getSubject().getPointProgressRate(),getSubject().getFinalPointRate()));
 				bw.newLine();
 			}
 			bw.close();
@@ -217,6 +230,7 @@ public class ScoreBoard {
 	 * Add new Student Score information
 	 * @return
 	 */
+	@Override
 	public int addScoreInfor(){
 		System.out.println(" Enter Student ID");
 		String studentID = enterID();
@@ -233,8 +247,16 @@ public class ScoreBoard {
 				// Change values
 				System.out.println(" Enter point process");
 				double pointProcess = enterNumber();
+				if (pointProcess == 0) {
+					System.out.println(" Error! This value is wrong. ");
+					return 0;
+				}
 				System.out.println(" Enter final point");
 				double finalPoint = enterNumber();
+				if (finalPoint == 0) {
+					System.out.println(" Error! This value is wrong. ");
+					return 0;
+				}
 				studentScoreList[n].changeScore(pointProcess, finalPoint);
 			}
 		}		
@@ -249,8 +271,16 @@ public class ScoreBoard {
 			String firstName = enterID();	
 			System.out.println(" Enter point process");
 			double pointProcess = enterNumber();
+			if (pointProcess == 0) {
+				System.out.println(" Error! This value is wrong. ");
+				return 0;
+			}
 			System.out.println(" Enter final point");
-			double finalPoint = enterNumber();			
+			double finalPoint = enterNumber();	
+			if (finalPoint == 0) {
+				System.out.println(" Error! This value is wrong. ");
+				return 0;
+			}
 			n++; // Increase number of student.
 			studentScoreList[n] = new StudentScore(lastName, midName, firstName, studentID, pointProcess, finalPoint);
 		}
@@ -265,6 +295,7 @@ public class ScoreBoard {
 	 *  
 	 * @param studentID
 	 */
+	@Override
 	public boolean eraseStudentScore(String studentID){
 		int i = getIndexStudent(studentID);
 		if ( i == 0 ) {
@@ -281,15 +312,17 @@ public class ScoreBoard {
 	 * @param studentID
 	 * @return
 	 */
+	@Override
 	public String getScore(String studentID){
 		int i = getIndexStudent(studentID);
 		if ( i == 0 ) System.out.println(" Sorry. This student is not on list");
-		else return studentScoreList[i].getMarkLine(getSubject().getPointProcessRate(),getSubject().getFinalPointRate() );
+		else return studentScoreList[i].getMarkLine(getSubject().getPointProgressRate(),getSubject().getFinalPointRate() );
 		return null;
 	}
 	/**
 	 * Swap first name follow form list
 	 */
+	@Override
 	public void swapName(){
 		StudentScore studentScore = new StudentScore();
 		for (int i = 1 ; i < n ; i++)
@@ -306,6 +339,7 @@ public class ScoreBoard {
 	 * <br> count how many A,B,C,D,F score on list score Board.
 	 * @return Get Highest Student Score and this student.
 	 */
+	@Override
 	public StudentScore getHighestStudentScore(){
 		max = 0.0;
 		min = 10.0;
@@ -339,6 +373,7 @@ public class ScoreBoard {
 	 * 
 	 * @return get lowest student score and this student.
 	 */
+	@Override
 	public StudentScore getLowestStudentScore(){
 		if ( n > 0){
 			for (int i = 1 ; i <= n; i++ )
@@ -356,6 +391,7 @@ public class ScoreBoard {
 	 * @param number
 	 * @return the number of *
 	 */
+	@Override
 	public String displayStar(int number){
 		String s = "";
 		for (int i = 0 ; i < number; i++)
@@ -365,6 +401,7 @@ public class ScoreBoard {
 	/*
 	 * Update File Report.
 	 */
+	@Override
 	public void updateFileReport(String pathReport){
 		try(FileWriter fw = new FileWriter(pathReport)){
 			BufferedWriter bw = new BufferedWriter(fw);
@@ -401,6 +438,7 @@ public class ScoreBoard {
 	/**
 	 * Create File report. If file is exist, update file.
 	 */
+	@Override
 	public void createFileReport(){
 		String pathReport = "src/samsung/java/database/" + getSubject().getSubjectID()
 				+ "_" + getSemesterID() + "_rp.txt";
@@ -428,6 +466,7 @@ public class ScoreBoard {
 	/**
 	 * Display Student Score information to Console window
 	 */
+	@Override
 	public void displayScore(){
 		try(FileReader fr = new FileReader(path)){
 			BufferedReader br = new BufferedReader(fr);
@@ -450,8 +489,9 @@ public class ScoreBoard {
 	 * Display Student Score Report information to Console window
 	 * @param pathReport : link to file report
 	 */
+	@Override
 	public void displayScoreReport(String pathReport){
-		try(FileReader fr = new FileReader(path)){
+		try(FileReader fr = new FileReader(pathReport)){
 			BufferedReader br = new BufferedReader(fr);
 			String line = "";
 			while ((line = br.readLine()) != null ){
@@ -468,4 +508,7 @@ public class ScoreBoard {
 			System.out.println(e.getMessage());
 		}
 	}
+
+
+	
 }

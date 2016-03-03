@@ -1,5 +1,0 @@
-SubjectID|33
-Subject|22
-F|20.0|80.0
-Semester|20151
-StudentCount|40

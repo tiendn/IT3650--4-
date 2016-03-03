@@ -1,5 +1,0 @@
-SubjectID|11
-Subject|Tien
-F|35.5|64.5
-Semester|20152
-StudentCount|0

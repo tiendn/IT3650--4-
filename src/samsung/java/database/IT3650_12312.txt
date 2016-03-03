@@ -1,4 +1,0 @@
-SubjectID|IT3650
-Subject|012312
-F|0.0|100.0
-Semester|12312

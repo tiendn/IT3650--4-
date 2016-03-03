@@ -1,9 +1,0 @@
-SubjectID|tien
-Subject|
-F|30.0|70.0
-Semester|20152
-StudentCount|4
-S|1|a b  |c | 0.0 | 1.0 | F |
-S|2|Nguyen thuc   |huynh | 10.0 | 10.0 | A |
-S|20132374|nguyen duc  |long | 0.0 | 0.0 | F |
-S|20133924|dao nam  |Tien | 10.0 | 10.0 | A |

@@ -11,9 +11,11 @@ public class ScoreManagement {
 	 * String input
 	 * @return
 	 */
-	public String enterID() {
+	public String enterString() {
 		input = new Scanner(System.in);
 		String ID = input.nextLine();
+		ID = ID.trim();
+		ID = ID.toUpperCase();
 		return ID;
 	}
 	/**
@@ -27,6 +29,7 @@ public class ScoreManagement {
 			number = Double.parseDouble(input.nextLine());
 		} catch (NumberFormatException nfe) {
 			System.out.println(nfe.getMessage());
+			System.out.println(" <Warning> The number value will be 0 if not enter again.");
 		}
 		return number;
 	}
@@ -36,10 +39,9 @@ public class ScoreManagement {
 	 */
 	public boolean askContinue(){
 		System.out.println(" Do you want to continue... ");
-		System.out.println(" 1. Yes ");
-		System.out.println(" 2. No ");
-		int c = (int)enterNumber();
-		if ( c == 1 ) return true;
+		System.out.println(" Y/N ? ");
+		String s = enterString();
+		if ( s.equalsIgnoreCase("Y")) return true;
 		return false;
 	}
 	/**
@@ -47,18 +49,24 @@ public class ScoreManagement {
 	 * @return 
 	 */
 	public Subject addNewSubject() {
-		// input = new Scanner(System.in);
 		System.out.println(" Enter Subject ID");
-		String ID = enterID();
+		String ID = enterString();
 		while (ID.length() == 0) {
 			System.out.println(" Error. SubjectID is empty");
-			ID = enterID();
+			ID = enterString();
 		}
 		System.out.println(" Enter Subject name ");
 		String name = input.nextLine();
-
-		System.out.println(" Enter point process rate ");
-		double ppr = enterNumber();
+		double ppr;
+		do{
+			System.out.println(" Enter point prgress rate (0<ppr<100) ");
+			ppr = enterNumber();
+		}
+			while( ppr > 100 || ppr == 0);
+//		if (ppr == 0) {
+//			System.out.println(" Error! This value is wrong. ");
+//			return null;
+//		}
 		Subject subject = new Subject(ID, name, ppr);
 		return subject;
 	}
@@ -68,10 +76,10 @@ public class ScoreManagement {
 	public void addNewScoreBoard() {
 		Subject subject = addNewSubject();
 		System.out.println(" Enter semester ID ");
-		String semesterID = enterID();
+		String semesterID = enterString();
 		while (semesterID.length() == 0) {
 			System.out.println(" Error. SemesterID is empty");
-			semesterID = enterID();
+			semesterID = enterString();
 		}
 		System.out.println(" Enter the number of student ");
 		int number = (int)enterNumber();
@@ -88,8 +96,8 @@ public class ScoreManagement {
 	 */
 	public int getIndexScoreBoard(String subjectID, String semesterID) {
 		for (int i = 1; i <= n; i++)
-			if (scoreBoard[i].getSubject().getSubjectID().equals(subjectID)
-					&& scoreBoard[i].getSemesterID().equals(semesterID)) {
+			if (scoreBoard[i].getSubject().getSubjectID().equalsIgnoreCase(subjectID)
+					&& scoreBoard[i].getSemesterID().equalsIgnoreCase(semesterID)) {
 				return i;
 			}
 		return 0;
@@ -100,9 +108,9 @@ public class ScoreManagement {
 	 */
 	public void addNewScoreStudent() {
 		System.out.println(" Enter subject ID");
-		String subjectID = enterID();
+		String subjectID = enterString();
 		System.out.println(" Enter semester ID ");
-		String semesterID = enterID();
+		String semesterID = enterString();
 		int i = getIndexScoreBoard(subjectID, semesterID);
 		if (i == 0)
 			System.out.println(" Sorry. The database don't have subject "
@@ -119,16 +127,18 @@ public class ScoreManagement {
 	 */
 	public void removeScore() {
 		System.out.println(" Enter subject ID");
-		String subjectID = enterID();
+		String subjectID = enterString();
 		System.out.println(" Enter semester ID ");
-		String semesterID = enterID();
+		String semesterID = enterString();
 		int i = getIndexScoreBoard(subjectID, semesterID);
-		if (i == 0)
+		if (i == 0){
 			System.out.println(" Sorry. The database don't have subject. "
 					+ subjectID + " on semester " + semesterID);
+		}
+			
 		else {
 			System.out.println(" Enter Student ID");
-			String studentID = enterID();
+			String studentID = enterString();
 			scoreBoard[i].eraseStudentScore(studentID);
 			scoreBoard[i].updateFile();
 		}
@@ -140,16 +150,16 @@ public class ScoreManagement {
 	 */
 	public void searchScore() {
 		System.out.println(" Enter subject ID");
-		String subjectID = enterID();
+		String subjectID = enterString();
 		System.out.println(" Enter semester ID ");
-		String semesterID = enterID();
+		String semesterID = enterString();
 		int i = getIndexScoreBoard(subjectID, semesterID);
 		if (i == 0)
 			System.out.println(" Sorry. The database don't have subject "
 					+ subjectID + " on semester " + semesterID);
 		else {
 			System.out.println(" Enter Student ID");
-			String studentID = enterID();
+			String studentID = enterString();
 			System.out.println(scoreBoard[i].getScore(studentID));
 		}
 		if (askContinue()) searchScore();
@@ -161,9 +171,9 @@ public class ScoreManagement {
 	 */
 	public void displayScoreBoard(){
 		System.out.println(" Enter subject ID");
-		String subjectID = enterID();
+		String subjectID = enterString();
 		System.out.println(" Enter semester ID ");
-		String semesterID = enterID();
+		String semesterID = enterString();
 		
 		int i = getIndexScoreBoard(subjectID, semesterID);
 		if (i == 0)
@@ -186,7 +196,7 @@ public class ScoreManagement {
 	 * Show continue sentence,
 	 */
 	public void displayNext() {
-		System.out.println(" Press enter to contiune ");
+		System.out.println(" Press enter to continue ");
 		try {
 			System.in.read();
 		} catch (IOException e) {

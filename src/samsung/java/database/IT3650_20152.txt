@@ -2,7 +2,8 @@ SubjectID|IT3650
 Subject|Java Programming
 F|30.0|70.0
 Semester|20152
-StudentCount|3
+StudentCount|4
+S|1sad|32d3 d32d32  |5tg43t | 0.0 | 0.0 | F |
 S|21321|d df  |fd | 3.0 | 0.0 | F |
 S|20131840|nguyen thuc  |Huynh | 10.0 | 10.0 | A |
-S|20133924|dao nam  |tien | 10.0 | 10.0 | A |
+S|20133924|dao nam  |tien | 0.0 | 0.0 | F |
