@@ -33,12 +33,17 @@ public interface IMainView {
 	 * Set listener to Sign out menu
 	 * @param listener A ActionListener listens the event when the user chooses Sign out menu item
 	 */
-	void setSignOutActionListener(ActionListener listener);
+	public void setSignOutActionListener(ActionListener listener);
 	/**
 	 * Set listener to choose file
 	 * @param listener A ActionListener listens the event when the user chooses "Choose data file.." button 
 	 */
 	public void setButtonFileChooserActionListener(ActionListener listener);
+	/**
+	 * Set listener to choose file
+	 * @param listener A ActionListener listens the event when the user chooses "Choose data file.." menu item 
+	 */
+	public void setFileChooserActionListener(ActionListener listener);
 	/**
 	 * Set listener to Open Button in File Chooser
 	 *  @param rowData[] : String data with rows

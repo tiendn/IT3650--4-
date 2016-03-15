@@ -26,6 +26,7 @@ import javax.swing.event.MenuListener;
 public class MainView extends JFrame implements IMainView {
 	private JMenuBar menuBar;
 	private JMenu menu;
+	private JMenuItem fileChooser;
 	private JMenuItem createAccountItem;
 	private JMenuItem signOutMenu;
 	private JButton btnFileChooser;
@@ -80,6 +81,10 @@ public class MainView extends JFrame implements IMainView {
 		menu = new JMenu("Products");
 		menu.setMnemonic(KeyEvent.VK_P);
 		menuBar.add(menu);
+		
+		fileChooser = new JMenuItem("Choose file data. ");
+		menu.add(fileChooser);
+		menuBar.add(menu);
 		//Account menu
 		menu = new JMenu("Account");
 		menu.setMnemonic(KeyEvent.VK_A);
@@ -132,7 +137,14 @@ public class MainView extends JFrame implements IMainView {
 	 */
 	@Override
 	public void setButtonFileChooserActionListener(ActionListener listener){
-		this.btnFileChooser.addActionListener(listener);
+			this.btnFileChooser.addActionListener(listener);
+	}
+	/* (non-Javadoc)
+	 * @see samsung.java.smart.store.view.IMainView#setFileChooserActionListener()
+	 */
+	@Override
+	public void setFileChooserActionListener(ActionListener listener){
+		this.fileChooser.addActionListener(listener);
 	}
 	/** (non-Javadoc)
 	 *  @see samsung.java.smart.store.view.IMainView#createTable()
