@@ -1,0 +1,13 @@
+IT3650_20152_rp.txt
+
+The student with the highest mark is: nguyen thuc Huynh
+The student with the highest mark is: 32d3 d32d32 5tg43t
+The average mark is: 2.725
+
+A histogram of the subject IT3650 is:  
+
+A:*
+B:
+C:
+D:
+F:***

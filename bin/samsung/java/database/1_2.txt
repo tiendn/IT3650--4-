@@ -1,0 +1,5 @@
+SubjectID|1
+Subject|qqq
+F|-23.0|123.0
+Semester|2
+StudentCount|0
