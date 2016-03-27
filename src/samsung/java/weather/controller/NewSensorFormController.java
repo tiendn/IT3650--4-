@@ -21,7 +21,13 @@ import samsung.java.weather.view.NewSensorForm;
 
 public class NewSensorFormController {
 	private final INewSensorForm newSensorForm = new NewSensorForm();
+	/**
+	 * The constructor control View and Model. about new Sensor
+	 */
 	public NewSensorFormController(){
+		/**
+		 * Close new Sensor Form and don't do anything
+		 */
 		newSensorForm.setCancelButtonActionListener(new ActionListener() {
 			
 			@Override
@@ -31,6 +37,9 @@ public class NewSensorFormController {
 				new MainUIController();
 			}
 		});
+		/**
+		 * Accept to create new Sensor
+		 */
 		newSensorForm.setCreateButtonActionListener(new ActionListener() {
 			
 			@Override
@@ -69,6 +78,13 @@ public class NewSensorFormController {
 		});
 		
 	}
+	/**
+	 * Check Error while new Sensor
+	 * @param sensorID
+	 * @param longitude
+	 * @param latitude
+	 * @return
+	 */
 	public boolean isError(String sensorID,double longitude,double latitude){
 		int check = 1;
 		// Check empty
@@ -95,6 +111,10 @@ public class NewSensorFormController {
 		if (check == 0 ) return true;
 		return false;
 	}
+	/**
+	 * Create new Sensor method.
+	 * @param sensorID
+	 */
 	public void createFileSensor(String sensorID){
 		try {
 			String path =  ISensorList.SENSOR_DIRECTORY + sensorID + ".txt" ;  

@@ -21,8 +21,9 @@ public class SensorList implements ISensorList{
 	private final int MAX_LIST = 50;
 	private ISensor[] sensorList;
 	private int numberOfSensors = -1;
+	private int timeUpdating = 10;
 	/**
-	 * 
+	 * The constructor create FileList sensor or read from file
 	 */
 	public SensorList(){
 		this.sensorList = new Sensor[MAX_LIST];
@@ -72,19 +73,62 @@ public class SensorList implements ISensorList{
 			System.out.println(e.getMessage());
 		}
 	}
-	
+//	public String[][] readFile(String sensorID){
+//		String[][] rowData = new String[1000][4];
+//		try(FileReader fr = new FileReader(ISensorList.SENSOR_DIRECTORY+sensorID+".txt")){
+//			BufferedReader br = new BufferedReader(fr);
+//			String line ;
+//			StringTokenizer tk;
+//			try{
+//				while ((line = br.readLine()) != null ){
+//					tk = new StringTokenizer(line,"|");
+//					for (int  j = 0 ; j <= 3; j++){
+//						rowData[][j] = tk.nextToken();
+//					}
+//					
+//				}
+//			}
+//			catch (RuntimeException re){
+//				System.out.println(re.getMessage());
+//			}
+//			br.close();
+//		}
+//		catch(IOException ioe){
+//			System.out.println(ioe.getMessage());
+//		}
+//		return rowData;
+//	}
+	/**
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.model.ISensorList#setTimeUpdating(int)
+	 */
+	@Override
+	public void setTimeUpdating(int time){
+		this.timeUpdating = time;
+	}
+	/**
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.model.ISensorList#getTimeUpdating()
+	 */
+	@Override
+	public int getTimeUpdating(){
+		return this.timeUpdating;
+	}
 	/*
 	 * (non-Javadoc)
 	 * @see samsung.java.weather.model.ISensorList#getNumberOfSensors()
 	 */
+	@Override
 	public int getNumberOfSensors(){
 		return numberOfSensors;
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.model.ISensorList#addSensor(ISensor)
 	 * @param sensor
 	 * @return
 	 */
+	@Override
 	public boolean addSensor(ISensor sensor){
 		if (numberOfSensors < MAX_LIST){
 			sensorList[numberOfSensors] = sensor;
@@ -104,14 +148,16 @@ public class SensorList implements ISensorList{
 		return false;
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.model.ISensorList#getSensorList()
 	 */
 	@Override
 	public ISensor[] getSensorList(){
 		return sensorList;
 	}
 	/**
-	 * Check the sensor ID have existed on list?
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.model.ISensorList#checkID(String)
 	 * @param sensorID
 	 * @return
 	 */
@@ -126,7 +172,8 @@ public class SensorList implements ISensorList{
 		return false;
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.model.ISensorList#checkPosition(double, double)
 	 */
 	@Override
 	public boolean checkPosition(double latitude, double longitude){

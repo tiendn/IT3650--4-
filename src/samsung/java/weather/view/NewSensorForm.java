@@ -26,7 +26,8 @@ public class NewSensorForm extends JFrame implements INewSensorForm{
 	private JButton btnOK;
 	private JButton btnCancel;
 	/**
-	 * The constructor 
+	 * The constructor show new sensor Form and get Data sent to The Controller
+	 * 
 	 */
 	public NewSensorForm(){
 		LookAndFeel old = UIManager.getLookAndFeel();
@@ -63,15 +64,16 @@ public class NewSensorForm extends JFrame implements INewSensorForm{
 		setVisible(true);
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.INewSensorForm#getSensorID()
 	 */
 	@Override
 	public String getSensorID(){
 		return tfSensorID.getText();
 	}
 	/**
-	 * 
-	 * @return
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.INewSensorForm#getLatitude()
 	 */
 	@Override
 	public double getLatitude(){
@@ -91,7 +93,8 @@ public class NewSensorForm extends JFrame implements INewSensorForm{
 		return latitude;
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.INewSensorForm#getLongitude()
 	 */
 	@Override
 	public double getLongitude(){
@@ -111,21 +114,24 @@ public class NewSensorForm extends JFrame implements INewSensorForm{
 		return longitude;
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.INewSensorForm#setCancelButtonActionListener(ActionListener)
 	 */
 	@Override
 	public void setCancelButtonActionListener(ActionListener listener){
 		this.btnCancel.addActionListener(listener);
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.INewSensorForm#setCreateButtonActionListener(ActionListener)
 	 */
 	@Override
 	public void setCreateButtonActionListener(ActionListener listener){
 		this.btnOK.addActionListener(listener);
 	}	
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.INewSensorForm#closeForm()
 	 */
 	@Override
 	public void closeForm(){

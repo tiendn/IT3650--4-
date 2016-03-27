@@ -3,9 +3,12 @@ package samsung.java.weather.view;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -44,7 +47,9 @@ public class MainUI extends JFrame implements IMainUI{
 	       old = null;
 	    } 
 	    menuBar =new JMenuBar();
-	    /// File menu 
+	    /**
+	    *  File menu 
+	    */
 	    menu = new JMenu("File");
 	    menu.setMnemonic(KeyEvent.VK_F);
 	    menuBar.add(menu);
@@ -55,16 +60,20 @@ public class MainUI extends JFrame implements IMainUI{
 	    menu.add(exitProgram);
 	    menuBar.add(menu);
 	    
-	    //// Edit Menu
+	    /**
+	     * Edit Menu
+	     */
 	    menu = new JMenu(" Edit ");
 	    menu.setMnemonic(KeyEvent.VK_E);
 	    menuBar.add(menu);
-	    changeTime = new JMenuItem(" Change time updating", KeyEvent.VK_C);
+	    changeTime = new JMenuItem(" Change time-updating table", KeyEvent.VK_C);
 	    menu.add(changeTime);
 	    menuBar.add(menu);
 	    
 	    
-	    /// View Menu
+	    /**
+	     * View Menu
+	     */
 	    menu = new JMenu(" View ");
 	    menu.setMnemonic(KeyEvent.VK_V);
 	    menuBar.add(menu);
@@ -75,6 +84,9 @@ public class MainUI extends JFrame implements IMainUI{
 	    menu.add(aboutMe);
 	    menuBar.add(menu);
 	    
+	    /**
+	     * 
+	     */
 		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBounds(0, 10, 600, 450);
@@ -89,13 +101,19 @@ public class MainUI extends JFrame implements IMainUI{
 		
 		btnShowFile.setBounds(150, 20, 100, 40);
 		label.setBounds(40,15,100,20);
-		////
+		/**
+		 * Table data
+		 */
 		String colName[] = {"Time","Date","Temperature","Humidity"};
 		String rowData[][]= { {" "," ", " "," "} };
 		JTable table = new JTable(rowData, colName);
 		table.getTableHeader().setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 14));
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(40, 65, 500, 350);
+		
+		/**
+		 * Edit JFrame
+		 */
 		panel.add(scrollPane);
 		Container cp = this.getContentPane();
 		cp.add(panel);
@@ -104,11 +122,24 @@ public class MainUI extends JFrame implements IMainUI{
 	    setJMenuBar(menuBar);
 	    setTitle(" Weather Sensor ");
 	    setSize(600,500);
+	    setResizable(false);
 	    setIconImage(getIconImage());
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLocationRelativeTo(null);
 	    setVisible(true);
 	}
+	/**
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#setAboutMeActionListener(ActionListener)
+	 */
+	@Override
+	public void setAboutMeActionListener(ActionListener listener){
+		this.aboutMe.addActionListener(listener);
+	}
+	/**
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#viewWeather(JComboBox)
+	 */
 	@Override
 	public void viewWeather(JComboBox<String> boxSensor){
 		this.boxSensor = boxSensor; 
@@ -118,6 +149,11 @@ public class MainUI extends JFrame implements IMainUI{
 		cp.setVisible(true);
 		
 	}
+	/**
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#showTable(String[], String[][])
+	 */
+	@Override
 	public void showTable(String colName[], String rowData[][]){
 		panel.remove(2);
 		JTable table = new JTable(rowData, colName);
@@ -128,38 +164,59 @@ public class MainUI extends JFrame implements IMainUI{
 		table.repaint();
 		validate();
 	}
+	/**
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#getBoxSensor()
+	 */
+	@Override
 	public JComboBox<String> getBoxSensor(){
 		return this.boxSensor;
 	}
-	public void setItemChangedListener(ItemListener listener){
-		this.boxSensor.addItemListener(listener);
-	}
+	/**
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#setFileActionListener(ActionListener)
+	 */
+	@Override
 	public void setFileActionListener(ActionListener listener){
 		this.btnShowFile.addActionListener(listener);
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#setExitActionListener(ActionListener)
 	 */
+	@Override
 	public void setExitActionListener(ActionListener listener){
 		this.exitProgram.addActionListener(listener);
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#setNewSensorActionListener(ActionListener)
 	 */
 	@Override
 	public void setNewSensorActionListener(ActionListener listener){
 		this.newSensor.addActionListener(listener);
 	}
+	/**
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#setChangeTimeActionListener(ActionListener)
+	 */
+	@Override
 	public void setChangeTimeActionListener(ActionListener listener){
 		this.changeTime.addActionListener(listener);
 	}
-	
+	/**
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#setViewWeatherActionListener(ActionListener)
+	 */
+	@Override
 	public void setViewWeatherActionListener(ActionListener listener){
 		recordingWeather.addActionListener(listener);
 	}
 	/**
-	 * 
+	 * (non-Javadoc)
+	 * @see samsung.java.weather.view.IMainUI#closeForm()
 	 */
+	@Override
 	public void closeForm(){
 		super.dispose();
 	}

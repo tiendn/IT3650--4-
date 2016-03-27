@@ -18,15 +18,26 @@ import samsung.java.weather.view.MainUI;
 public class MainUIController {
 	private IMainUI mainUI;
 	private ISensorList ssList;
-
 	/**
-	 * 
+	 *  The constructor processing many ActionListener and to control the View, edit/new data with Model 
 	 */
 	public MainUIController() {
 		mainUI = new MainUI();
 		ssList = new SensorList();
 		ISensor[] sensorList = ssList.getSensorList();
-		Thread[] tableThread = new Thread[ssList.getNumberOfSensors()+1];
+		/**
+		 * About me action
+		 */
+		mainUI.setAboutMeActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JOptionPane.showMessageDialog(null, "Author: Dao Nam Tien - K58 - HUST", "About me", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		/**
+		 * Set View weather desktop
+		 */
 		mainUI.setViewWeatherActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -40,6 +51,9 @@ public class MainUIController {
 				mainUI.viewWeather(list);
 			}
 		});
+		/**
+		 * Set Exit program
+		 */
 		mainUI.setExitActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -47,6 +61,9 @@ public class MainUIController {
 				mainUI.closeForm();
 			}
 		});
+		/**
+		 * Open new sensor form and take data sent to the Model
+		 */
 		mainUI.setNewSensorActionListener(new ActionListener() {
 
 			@Override
@@ -56,6 +73,9 @@ public class MainUIController {
 				mainUI.closeForm();
 			}
 		});
+		/**
+		 * Change Time-updating table
+		 */
 		mainUI.setChangeTimeActionListener(new ActionListener() {
 
 			@Override
@@ -63,14 +83,28 @@ public class MainUIController {
 				// TODO Auto-generated method stub
 				String timeUpdate = JOptionPane
 						.showInputDialog("Enter new time-updating : ");
-				System.out.println(timeUpdate);
-				// Set time ..
+				int timeUpdating = 10;
+				try
+				{
+					timeUpdating = Integer.parseInt(timeUpdate);
+					JOptionPane.showMessageDialog(null, "OK. Done");
+				}
+				catch (NumberFormatException nfe){
+					System.out.println(nfe.getMessage());
+				}
+				ssList.setTimeUpdating(timeUpdating);
 			}
 		});
+		/**
+		 * Show Table data
+		 */
 		mainUI.setFileActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				/** 
+				 * New thread with table
+				 */
 							Thread thread = new Thread(){
 								@Override
 								public void run(){
@@ -92,7 +126,7 @@ public class MainUIController {
 										}
 									}
 										try {
-											sleep(10000);
+											sleep(ssList.getTimeUpdating()*1000);
 										} catch (InterruptedException e1) {
 											// TODO Auto-generated catch block
 											e1.printStackTrace();
@@ -102,48 +136,6 @@ public class MainUIController {
 							};
 							thread.start();
 				}
-				
-				
-		}); 
-		mainUI.setItemChangedListener(new ItemListener() {
-			
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
-				Thread thread = new Thread(){
-					@Override
-					public void run(){
-					while(1 != 0){
-						JOptionPane.showMessageDialog(null, "fdgfdgd");
-						mainUI.getBoxSensor();
-						
-						String colName[] = { "Time", "Date", "Temperature", "Humidity" };
-						JComboBox<String> comboBox = mainUI.getBoxSensor();
-						Object selected = comboBox.getSelectedItem();
-						for (int i = 0; i < ssList.getNumberOfSensors(); i++) {
-							if (selected.equals(sensorList[i].getSensorID())) {
-								String[][] buffer = sensorList[i].readFile(sensorList[i].getSensorID());
-								int n = sensorList[i].getNumberResults();
-								String[][] rowData = new String[n+1][4];
-								for (int j = 0 ; j <= n ; j++){
-									for (int k = 0 ; k <= 3 ; k ++)
-										rowData[j][k] = buffer[j][k];
-								}
-								mainUI.showTable(colName, rowData);
-								break;
-							}
-						}
-							try {
-								sleep(10000);
-							} catch (InterruptedException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-					}
-				};
-				thread.start();
-			}
 		}); 
 	}
 }
