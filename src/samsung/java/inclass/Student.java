@@ -1,5 +1,18 @@
 package samsung.java.inclass;
 
+import java.util.Random;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 public class Student {
 	private String studentID;
 	private String fullName;
@@ -67,11 +80,59 @@ public class Student {
 	}
 	
 	public static void main(String[] args){
+		Random rd = new Random();
+		double tempMin = 5;
+		double tempMax = 45;
+		Double temperatureValue = tempMin + (tempMax - tempMin)*rd.nextDouble();
+		
+		System.out.println(temperatureValue.toString().substring(0, 5));
+		double humidityMin = 50;
+		double humidityMax = 100;
+		double humidityValue = humidityMin + (humidityMax - humidityMin)*rd.nextDouble();
+		System.out.println((float)(Math.random()*100+0));
 		Student s1 = new Student("20133924","Dao Nam Tien",3,24,17);
 		s1.displayStudentInfo();
 		s1.enrolSubject(3);
 		s1.displayStudentInfo();
 		s1.unEnrolSubject(4);
 		s1.displayStudentInfo();
+		JFrame frame = new JFrame("MenuSample Example");
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    JMenuBar menuBar = new JMenuBar();
+
+	    // File Menu, F - Mnemonic
+	    JMenu fileMenu = new JMenu("File");
+	    fileMenu.setMnemonic(KeyEvent.VK_F);
+	    menuBar.add(fileMenu);
+
+	    // File->New, N - Mnemonic
+	    JMenuItem newMenuItem = new JMenuItem(new ShowAction(frame));
+	    fileMenu.add(newMenuItem);
+
+	    frame.setJMenuBar(menuBar);
+	    frame.setSize(350, 250);
+	    frame.setVisible(true);
 	}
+	
+
+ 
 }
+class ShowAction extends AbstractAction {
+	  Component parentComponent;
+
+	  public ShowAction(Component parentComponent) {
+//	    super("About");
+	    putValue(Action.MNEMONIC_KEY, new Integer(KeyEvent.VK_A));
+	    this.parentComponent = parentComponent;
+	  }
+
+	  public void actionPerformed(ActionEvent actionEvent) {
+	    Runnable runnable = new Runnable() {
+	      public void run() {
+	        JOptionPane.showMessageDialog(parentComponent, "About Swing", "About Box V2.0",
+	            JOptionPane.INFORMATION_MESSAGE);
+	      }
+	    };
+	    EventQueue.invokeLater(runnable);
+	  }
+	}

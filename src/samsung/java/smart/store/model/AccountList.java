@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.StringTokenizer;
 
-import javax.swing.JOptionPane;
 
 /**
  * @author Bui Trong Tung The AccountList class implementing IAccountList
