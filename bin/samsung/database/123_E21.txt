@@ -1,0 +1,5 @@
+SubjectID|123
+Subject|12
+F|12.0|88.0
+Semester|E21
+StudentCount|0

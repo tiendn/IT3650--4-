@@ -1,0 +1,11 @@
+SubjectID|1
+Subject|Java Programming
+F|30.0|70.0
+Semester|1
+StudentCount|6
+S|13|2 32  |3 | 1.0 | 1.0 | F |
+S|202|fds fds  |aba | 0.0 | 1.0 | F |
+S|20101160|NGUYEN VAN  |AN | 8.5 | 7.0 | B |
+S|20191182|TRAN QUOC  |BINH | 10.0 | 9.0 | A |
+S|20111191|LE BANG  |CHAN | 0.0 | 0.0 | F |
+S|20101216|NGUYEN VAN  |DUONG | 8.5 | 8.5 | A |
